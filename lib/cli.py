@@ -3,7 +3,19 @@ from helpers import exit_program
 class Cli:
 
     def run(self):
-        print('this is working')
+        print('WELCOME TO YOUR MATCH LOG!')
+        self.options()
+
+    def options(self):
+        print('Type "1" to view all matches')
+        print('Type "2" to add new match')
+        print('Type "3" to delete existing match')
+        print('Type "4" to view all opponents')
+        print('Type "5" to add new opponent')
+        print('Type "6" to delete existing opponent')
+        print('Type "7" to search matches by opponent')
+        print('Type "8" to search matches by date')
+        self.selection()
 
     """ def main():
         while True:

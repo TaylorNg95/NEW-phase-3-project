@@ -5,14 +5,17 @@ from models.opponent import Opponent
 from cli import Cli
 # import ipdb
 
-Match.create_table()
 Opponent.create_table()
+Match.create_table()
 
 # DEVELOPMENT PURPOSES ONLY**
 # Match.drop_table()
 # Opponent.drop_table()
 
 # get all opponents, get all matches
+
+Opponent.get_all()
+Match.get_all()
 
 Cli().run()
 Opponent.create_opponent('Taylor')
