@@ -1,4 +1,5 @@
 import re
+from __init__ import CONN, CURSOR
 
 class Match:
     def __init__(self, date, outcome, opponent_id, id=None):
@@ -29,3 +30,17 @@ class Match:
             self._outcome = outcome
         else:
             raise Exception
+        
+    @classmethod
+    def create_table(cls):
+        sql = """
+            CREATE TABLE IF NOT EXISTS matches(
+                id INTEGER PRIMARY KEY,
+                date TEXT,
+                outcome INTEGER,
+                opponent_id INTEGER,
+                FOREIGN KEY(opponent_id) REFERENCES opponents(id)
+            );
+        """
+        CURSOR.execute(sql)
+        CONN.commit()

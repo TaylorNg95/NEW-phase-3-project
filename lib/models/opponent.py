@@ -18,4 +18,11 @@ class Opponent:
         
     @classmethod
     def create_table(cls):
-        pass
+        sql = """
+            CREATE TABLE IF NOT EXISTS opponents(
+                id INTEGER PRIMARY KEY,
+                name TEXT
+            );
+        """
+        CURSOR.execute(sql)
+        CONN.commit()

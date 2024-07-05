@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 
+from models.match import Match
+from models.opponent import Opponent
 from cli import Cli
 
 # create opponent table, create match table
+Match.create_table()
+Opponent.create_table()
 
 # get all opponents, get all matches
 
