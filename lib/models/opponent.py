@@ -1,3 +1,5 @@
+from __init__ import CONN, CURSOR
+
 class Opponent:
     def __init__(self, name, id=None):
         self.name = name
@@ -13,3 +15,7 @@ class Opponent:
             self._name = name
         else:
             raise Exception
+        
+    @classmethod
+    def create_table(cls):
+        pass

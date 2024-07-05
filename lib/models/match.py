@@ -29,5 +29,3 @@ class Match:
             self._outcome = outcome
         else:
             raise Exception
-
-# COMMIT
