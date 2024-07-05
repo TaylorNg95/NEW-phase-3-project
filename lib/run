@@ -12,5 +12,9 @@ Opponent.create_table()
 
 Cli().run()
 Opponent.create_opponent('Taylor')
+Opponent.create_opponent('Kat')
+Opponent.create_opponent('Brittany')
 Match.create_match('07-05-24', '1', 1)
-
+Match.create_match('06-04-24', '0', 2)
+Match.create_match('06-03-24', '1', 3)
+ipdb.set_trace()

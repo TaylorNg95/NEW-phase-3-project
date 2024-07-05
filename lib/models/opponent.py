@@ -43,3 +43,18 @@ class Opponent:
 
         self.id = CURSOR.lastrowid
         Opponent.all[self.id] = self
+
+    @classmethod
+    def get_all(cls):
+        sql = "SELECT * FROM opponents"
+        opponent_rows = CURSOR.execute(sql).fetchall()
+        for row in opponent_rows:
+            opponent = cls.instance_from_db(row)
+            cls.all[opponent.id] = opponent
+
+    @classmethod
+    def instance_from_db(cls, row):
+        id = row[0]
+        name = row[1]
+        opponent = cls(id=id, name=name)
+        return opponent
