@@ -2,6 +2,8 @@ import re
 from __init__ import CONN, CURSOR
 
 class Match:
+    all = {}
+    
     def __init__(self, date, outcome, opponent_id, id=None):
         self.date = date
         self.outcome = outcome

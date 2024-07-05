@@ -1,6 +1,8 @@
 from __init__ import CONN, CURSOR
 
 class Opponent:
+    all = {}
+
     def __init__(self, name, id=None):
         self.name = name
         self.id = id
@@ -26,3 +28,18 @@ class Opponent:
         """
         CURSOR.execute(sql)
         CONN.commit()
+
+    @classmethod
+    def create_opponent(cls, name):
+        opponent = cls(name=name)
+        opponent.save()
+
+    def save(self):
+        sql = """
+            INSERT INTO opponents(name) VALUES(?)
+        """
+        CURSOR.execute(sql, (self.name,))
+        CONN.commit()
+
+        self.id = CURSOR.lastrowid
+        Opponent.all[self.id] = self
