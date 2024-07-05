@@ -29,6 +29,13 @@ class Opponent:
         CURSOR.execute(sql)
         CONN.commit()
 
+    # DEVELOPMENT PURPOSES ONLY**
+    @classmethod
+    def drop_table(cls):
+        sql = "DROP TABLE opponents"
+        CURSOR.execute(sql)
+        CONN.commit()
+
     @classmethod
     def create_opponent(cls, name):
         opponent = cls(name=name)

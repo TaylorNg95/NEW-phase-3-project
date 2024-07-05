@@ -47,6 +47,13 @@ class Match:
         CURSOR.execute(sql)
         CONN.commit()
 
+    # DEVELOPMENT PURPOSES ONLY**
+    @classmethod
+    def drop_table(cls):
+        sql = "DROP TABLE matches"
+        CURSOR.execute(sql)
+        CONN.commit()
+
     @classmethod
     def create_match(cls, date, outcome, opponent_id):
         match = cls(date=date, outcome=outcome, opponent_id=opponent_id)
