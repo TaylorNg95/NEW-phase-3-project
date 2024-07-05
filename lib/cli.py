@@ -15,7 +15,7 @@ class Cli:
         print('Type "6" to delete existing opponent')
         print('Type "7" to search matches by opponent')
         print('Type "8" to search matches by date')
-        self.selection()
+        #self.selection()
 
     """ def main():
         while True:

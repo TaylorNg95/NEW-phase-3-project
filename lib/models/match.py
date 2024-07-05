@@ -68,3 +68,20 @@ class Match:
 
         self.id = CURSOR.lastrowid
         Match.all[self.id] = self
+
+    @classmethod
+    def get_all(cls):
+        sql = "SELECT * FROM matches"
+        matches_rows = CURSOR.execute(sql).fetchall()
+        for row in matches_rows:
+            match = cls.instance_from_db(row)
+            cls.all[match.id] = match
+
+    @classmethod
+    def instance_from_db(cls, row):
+        id = row[0]
+        date = row[1]
+        outcome = row[2]
+        opponent_id = row[3]
+        match = cls(id=id, date=date, outcome=outcome, opponent_id=opponent_id)
+        return match
