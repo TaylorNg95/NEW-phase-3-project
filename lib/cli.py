@@ -47,23 +47,26 @@ class Cli:
             print('')
             self.options()
 
-    """ def main():
-        while True:
-            menu()
-            choice = input("> ")
-            if choice == "0":
-                exit_program()
-            elif choice == "1":
-                helper_1()
-            else:
-                print("Invalid choice")
+    def view_all_matches(self):
+        pass
 
+    def add_new_match(self):
+        pass
 
-    def menu():
-        print("Please select an option:")
-        print("0. Exit the program")
-        print("1. Some useful function")
+    def delete_existing_match(self):
+        pass
 
+    def view_all_opponents(self):
+        pass
 
-    if __name__ == "__main__":
-        main() """
+    def add_new_opponent(self):
+        pass
+
+    def delete_existing_opponent(self):
+        pass
+
+    def matches_by_opponent(self):
+        pass
+
+    def matches_by_date(self):
+        pass
