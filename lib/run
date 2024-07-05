@@ -12,4 +12,5 @@ Opponent.create_table()
 
 Cli().run()
 Opponent.create_opponent('Taylor')
+Match.create_match('07-05-24', '1', 1)
 

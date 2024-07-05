@@ -3,7 +3,7 @@ from __init__ import CONN, CURSOR
 
 class Match:
     all = {}
-    
+
     def __init__(self, date, outcome, opponent_id, id=None):
         self.date = date
         self.outcome = outcome
@@ -46,3 +46,18 @@ class Match:
         """
         CURSOR.execute(sql)
         CONN.commit()
+
+    @classmethod
+    def create_match(cls, date, outcome, opponent_id):
+        match = cls(date=date, outcome=outcome, opponent_id=opponent_id)
+        match.save()
+
+    def save(self):
+        sql = """
+            INSERT INTO matches(date, outcome, opponent_id) VALUES(?, ?, ?)
+        """
+        CURSOR.execute(sql, (self.date, self.outcome, self.opponent_id))
+        CONN.commit()
+
+        self.id = CURSOR.lastrowid
+        Match.all[self.id] = self
