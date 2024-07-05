@@ -1,5 +1,6 @@
 import re
 from __init__ import CONN, CURSOR
+import ipdb
 
 class Match:
     all = {}
@@ -28,8 +29,9 @@ class Match:
     
     @outcome.setter
     def outcome(self, outcome):
-        if outcome == '1' or outcome == '0':
-            self._outcome = outcome
+        outcome_int = int(outcome)
+        if outcome_int == 1 or outcome_int == 0:
+            self._outcome = outcome_int
         else:
             raise Exception
         
