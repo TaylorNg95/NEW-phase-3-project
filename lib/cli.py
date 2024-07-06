@@ -1,14 +1,16 @@
 from helpers import exit_program, clear_screen
+from models.match import Match
+import ipdb
 
 class Cli:
 
     def run(self):
         clear_screen()
         print('WELCOME TO YOUR MATCH LOG!')
-        print('')
         self.options()
 
     def options(self):
+        print('')
         print('Type "1" to view all matches')
         print('Type "2" to add new match')
         print('Type "3" to delete existing match')
@@ -48,7 +50,18 @@ class Cli:
             self.options()
 
     def view_all_matches(self):
-        pass
+        all_matches = [value for key, value in Match.all.items()]
+        print('ALL MATCHES:')
+        print('')
+        for match in all_matches:
+            spacing = '  '
+            if 10 <= match.id < 100:
+                spacing = ' '
+            elif 100 <= match.id < 1000:
+                spacing = ''
+            print(f'ID: {match.id}{spacing}| DATE: {match.date} | OUTCOME: {"W" if match.outcome == 1 else "L"} | OPPONENT: {match.opponent_id}')
+            print('------')
+        self.options()
 
     def add_new_match(self):
         pass
