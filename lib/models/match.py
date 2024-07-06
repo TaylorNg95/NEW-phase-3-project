@@ -97,4 +97,4 @@ class Match:
     def find_by_id(cls, id):
         sql = "SELECT * FROM matches WHERE id = ?"
         match = CURSOR.execute(sql, (id,)).fetchone()
-        return match
+        return cls.instance_from_db(match)

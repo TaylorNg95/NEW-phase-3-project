@@ -65,3 +65,9 @@ class Opponent:
         name = row[1]
         opponent = cls(id=id, name=name)
         return opponent
+    
+    @classmethod
+    def find_by_id(cls, id):
+        sql = "SELECT * FROM opponents WHERE id = ?"
+        opponent = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(opponent)

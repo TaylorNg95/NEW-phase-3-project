@@ -3,7 +3,6 @@
 from models.match import Match
 from models.opponent import Opponent
 from cli import Cli
-# import ipdb
 
 Opponent.create_table()
 Match.create_table()
@@ -24,5 +23,3 @@ Opponent.create_opponent('Brittany')
 Match.create_match('07-05-24', '1', 1)
 Match.create_match('06-04-24', '0', 2)
 Match.create_match('06-03-24', '1', 3) """
-
-# ipdb.set_trace()
