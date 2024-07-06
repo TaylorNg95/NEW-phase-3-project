@@ -1,6 +1,7 @@
 from helpers import clear_screen, show_user_error, check_proceed, exit_program
 from models.match import Match
 from models.opponent import Opponent
+""" import ipdb """
 
 class Cli:
 
@@ -25,6 +26,7 @@ class Cli:
 
     def selection(self):
         sel = input('Enter selection: ')
+        """ ipdb.set_trace() """
         clear_screen()
         if sel == '1':
             self.view_all_matches()
@@ -94,18 +96,24 @@ class Cli:
         print('')
         print('In order to add a new match, you must know the match ID.')
         choice = check_proceed()
-        if choice == 1:
+        if choice == '1':
             try:
-                match_id = input('Enter match ID: ')
-                pass
+                match_id = int(input('Enter match ID: '))
+                match = Match.find_by_id(match_id)
+                match.delete_match()
+                print('Successfully deleted match!')
+                self.options()
             except:
-                print('Match ID does not exist. Try again')
+                show_user_error('Invalid match ID. Please try again.')
+                # print('Match ID does not exist. Try again')
+                self.delete_existing_match()
             # NEED TO UPDATE THIS
-
         elif choice == '2':
             clear_screen()
             self.options()
-
+        else:
+            show_user_error()
+            self.delete_existing_match()
 
     def view_all_opponents(self):
         all_opponents = [value for key, value in Opponent.all.items()]

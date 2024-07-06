@@ -88,10 +88,13 @@ class Match:
         match = cls(id=id, date=date, outcome=outcome, opponent_id=opponent_id)
         return match
 
-    """ def delete_match(self):
+    def delete_match(self):
         sql = "DELETE FROM matches WHERE id = ?"
         CURSOR.execute(sql, (self.id,))
-        CONN.commit() """
+        CONN.commit()
+
+        del Match.all[self.id]
+        self.id = None
     
     @classmethod
     def find_by_id(cls, id):
