@@ -94,7 +94,7 @@ class Cli:
     def delete_existing_match(self):
         print('DELETING MATCH:')
         print('')
-        print('In order to add a new match, you must know the match ID.')
+        print('In order to delete a match, you must know the match ID.')
         choice = check_proceed()
         if choice == '1':
             try:
@@ -144,7 +144,26 @@ class Cli:
             self.add_new_opponent()
 
     def delete_existing_opponent(self):
-        pass
+        print('DELETING OPPONENT:')
+        print('')
+        print('In order to delete an opponent, you must know the opponent ID.')
+        choice = check_proceed()
+        if choice == '1':
+            try:
+                opponent_id = int(input('Enter opponent ID: '))
+                opponent = Opponent.find_by_id(opponent_id)
+                opponent.delete_opponent()
+                print('Successfully deleted opponent!')
+                self.options()
+            except:
+                show_user_error('Invalid opponent ID. Please try again.')
+                self.delete_existing_opponent()
+        elif choice == '2':
+            clear_screen()
+            self.options()
+        else:
+            show_user_error()
+            self.delete_existing_opponent()
 
     def matches_by_opponent(self):
         pass
