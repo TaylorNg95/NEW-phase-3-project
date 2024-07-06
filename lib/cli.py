@@ -1,4 +1,4 @@
-from helpers import clear_screen, show_user_error, exit_program
+from helpers import clear_screen, show_user_error, check_proceed, exit_program
 from models.match import Match
 from models.opponent import Opponent
 """ import ipdb """
@@ -70,12 +70,8 @@ class Cli:
     def add_new_match(self):
         print('ADDING NEW MATCH:')
         print('')
-        # Match doesn't exist without an opponent, so this aims to help user navigate opponents.
         print('In order to add a new match, you must know the opponent ID.')
-        print('Type "1" to proceed')
-        print('Type "2" to view all opponents')
-        print('Type "3" to create new opponent')
-        choice = input('Enter selection: ')
+        choice = check_proceed()
         if choice == '1':
             try:
                 date = input('Enter date (MM-DD-YY): ')
@@ -87,14 +83,29 @@ class Cli:
             except Exception as e:
                 show_user_error(e)
                 self.add_new_match()
-        elif choice == '2': self.view_all_opponents()
-        elif choice == '3': self.add_new_opponent()
+        elif choice == '2':
+            clear_screen()
+            self.options()
         else:
             show_user_error()
             self.add_new_match()
 
     def delete_existing_match(self):
-        pass
+        print('DELETING MATCH:')
+        print('')
+        print('In order to add a new match, you must know the opponent ID.')
+        choice = check_proceed()
+        if choice == 1:
+            try:
+                match_id = input('Enter match ID: ')
+            except:
+                print('Match ID does not exist. Try again')
+            # NEED TO UPDATE THIS
+
+        elif choice == '2':
+            clear_screen()
+            self.options()
+
 
     def view_all_opponents(self):
         all_opponents = [value for key, value in Opponent.all.items()]
