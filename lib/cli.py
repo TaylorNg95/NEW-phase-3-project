@@ -93,11 +93,12 @@ class Cli:
     def delete_existing_match(self):
         print('DELETING MATCH:')
         print('')
-        print('In order to add a new match, you must know the opponent ID.')
+        print('In order to add a new match, you must know the match ID.')
         choice = check_proceed()
         if choice == 1:
             try:
                 match_id = input('Enter match ID: ')
+                pass
             except:
                 print('Match ID does not exist. Try again')
             # NEED TO UPDATE THIS

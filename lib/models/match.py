@@ -87,3 +87,14 @@ class Match:
         opponent_id = row[3]
         match = cls(id=id, date=date, outcome=outcome, opponent_id=opponent_id)
         return match
+
+    """ def delete_match(self):
+        sql = "DELETE FROM matches WHERE id = ?"
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit() """
+    
+    @classmethod
+    def find_by_id(cls, id):
+        sql = "SELECT * FROM matches WHERE id = ?"
+        match = CURSOR.execute(sql, (id,)).fetchone()
+        return match
