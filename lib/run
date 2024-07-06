@@ -11,8 +11,6 @@ Match.create_table()
 # Match.drop_table()
 # Opponent.drop_table()
 
-# get all opponents, get all matches
-
 Opponent.get_all()
 Match.get_all()
 

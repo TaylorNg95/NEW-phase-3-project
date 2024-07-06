@@ -69,7 +69,7 @@ class Cli:
         self.options()
 
     def add_new_match(self):
-        print('ADDING NEW MATCH:')
+        print('ADD NEW MATCH:')
         print('')
         print('In order to add a new match, you must know the opponent ID.')
         choice = check_proceed()
@@ -134,13 +134,22 @@ class Cli:
     def add_new_opponent(self):
         print('ADD NEW OPPONENT:')
         print('')
-        name = input('Enter name: ')
-        try:
-            Opponent.create_opponent(name=name)
-            print('Successfully added new opponent!')
+        print('In order to add a new opponent, you must enter the opponent\'s name.')
+        choice = check_proceed()
+        if choice == '1':
+            name = input('Enter name: ')
+            try:
+                Opponent.create_opponent(name=name)
+                print('Successfully added new opponent!')
+                self.options()
+            except Exception as e:
+                show_user_error(e)
+                self.add_new_opponent()
+        elif choice == '2':
+            clear_screen()
             self.options()
-        except Exception as e:
-            show_user_error(e)
+        else:
+            show_user_error()
             self.add_new_opponent()
 
     def delete_existing_opponent(self):
