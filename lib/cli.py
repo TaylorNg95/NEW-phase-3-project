@@ -105,9 +105,7 @@ class Cli:
                 self.options()
             except:
                 show_user_error('Invalid match ID. Please try again.')
-                # print('Match ID does not exist. Try again')
                 self.delete_existing_match()
-            # NEED TO UPDATE THIS
         elif choice == '2':
             clear_screen()
             self.options()

@@ -88,6 +88,12 @@ class Match:
         match = cls(id=id, date=date, outcome=outcome, opponent_id=opponent_id)
         return match
 
+    @classmethod
+    def find_by_id(cls, id):
+        sql = "SELECT * FROM matches WHERE id = ?"
+        match = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(match)
+
     def delete_match(self):
         sql = "DELETE FROM matches WHERE id = ?"
         CURSOR.execute(sql, (self.id,))
@@ -95,9 +101,3 @@ class Match:
 
         del Match.all[self.id]
         self.id = None
-    
-    @classmethod
-    def find_by_id(cls, id):
-        sql = "SELECT * FROM matches WHERE id = ?"
-        match = CURSOR.execute(sql, (id,)).fetchone()
-        return cls.instance_from_db(match)

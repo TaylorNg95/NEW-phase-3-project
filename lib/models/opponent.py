@@ -71,3 +71,11 @@ class Opponent:
         sql = "SELECT * FROM opponents WHERE id = ?"
         opponent = CURSOR.execute(sql, (id,)).fetchone()
         return cls.instance_from_db(opponent)
+    
+    def delete_opponent(self):
+        sql = "DELETE FROM opponents WHERE id = ?"
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit()
+
+        del Opponent.all[self.id]
+        self.id = None
