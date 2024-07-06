@@ -21,7 +21,7 @@ class Match:
         if re.fullmatch(r'\d{2}-\d{2}-\d{2}', date):
             self._date = date
         else:
-            raise Exception
+            raise Exception('Date must be formatted as MM-DD-YY')
         
     @property
     def outcome(self):
@@ -33,7 +33,7 @@ class Match:
         if outcome_int == 1 or outcome_int == 0:
             self._outcome = outcome_int
         else:
-            raise Exception
+            raise Exception('Outcome must be 1 or 0')
         
     @classmethod
     def create_table(cls):

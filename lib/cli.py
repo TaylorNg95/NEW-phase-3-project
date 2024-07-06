@@ -106,8 +106,8 @@ class Cli:
             Opponent.create_opponent(name)
             print('Successfully added new opponent!')
             self.options()
-        except:
-            print('Invalid input. Please try again!')
+        except Exception as e:
+            print(f'Error: {e}')
             print('')
             self.add_new_opponent()
 

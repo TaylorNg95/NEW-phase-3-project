@@ -16,7 +16,7 @@ class Opponent:
         if isinstance(name, str) and len(name) > 0:
             self._name = name
         else:
-            raise Exception
+            raise Exception('Name must be a non-empty string')
         
     @classmethod
     def create_table(cls):
