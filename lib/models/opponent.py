@@ -1,4 +1,5 @@
 from __init__ import CONN, CURSOR
+from models.match import Match
 
 class Opponent:
     all = {}
@@ -79,3 +80,6 @@ class Opponent:
 
         del Opponent.all[self.id]
         self.id = None
+
+    def get_matches(self):
+        return [match for match_id, match in Match.all.items() if match.opponent_id == self.id]

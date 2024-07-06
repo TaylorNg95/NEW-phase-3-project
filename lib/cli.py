@@ -1,7 +1,7 @@
 from helpers import clear_screen, show_user_error, check_proceed, exit_program
 from models.match import Match
 from models.opponent import Opponent
-""" import ipdb """
+import ipdb
 
 class Cli:
 
@@ -92,7 +92,7 @@ class Cli:
             self.add_new_match()
 
     def delete_existing_match(self):
-        print('DELETING MATCH:')
+        print('DELETE MATCH:')
         print('')
         print('In order to delete a match, you must know the match ID.')
         choice = check_proceed()
@@ -153,7 +153,7 @@ class Cli:
             self.add_new_opponent()
 
     def delete_existing_opponent(self):
-        print('DELETING OPPONENT:')
+        print('DELETE OPPONENT:')
         print('')
         print('In order to delete an opponent, you must know the opponent ID.')
         choice = check_proceed()
@@ -175,7 +175,37 @@ class Cli:
             self.delete_existing_opponent()
 
     def matches_by_opponent(self):
-        pass
+        print('SEARCH MATCHES BY OPPONENT:')
+        print('')
+        print('In order to search matches by opponent, you must know the opponent ID.')
+        choice = check_proceed()
+        if choice == '1':
+            try:
+                opponent_id = int(input('Enter opponent ID: '))
+                opponent = Opponent.find_by_id(opponent_id)
+                matches = opponent.get_matches()
+                clear_screen()
+                print(f'MATCHES AGAINST {opponent.name.upper()}:')
+                print('')
+                for match in matches:
+                    # adjust spacing to ensure alignment depending on ID length
+                    spacing = '  '
+                    if 10 <= match.id < 100:
+                        spacing = ' '
+                    elif 100 <= match.id < 1000:
+                        spacing = ''
+                    print(f'ID: {match.id}{spacing}| DATE: {match.date} | OUTCOME: {"W" if match.outcome == 1 else "L"} | OPPONENT: {match.opponent_id}')
+                    print('------')
+                self.options()
+            except:
+                show_user_error('Invalid opponent ID. Please try again.')
+                self.matches_by_opponent()
+        elif choice == '2':
+            clear_screen()
+            self.options()
+        else:
+            show_user_error()
+            self.matches_by_opponent()
 
     def matches_by_date(self):
         pass
