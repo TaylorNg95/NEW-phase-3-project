@@ -1,6 +1,7 @@
 import re
 from __init__ import CONN, CURSOR
 import ipdb
+from datetime import datetime
 
 class Match:
     all = {}
@@ -101,3 +102,10 @@ class Match:
 
         del Match.all[self.id]
         self.id = None
+
+    @classmethod
+    def search_by_date(cls, start, end):
+        date_format = "%m-%d-%y"
+        start_date = datetime.strptime(start, date_format)
+        end_date = datetime.strptime(end, date_format)
+        return [match.date for match_id, match in Match.all.items() if start_date <= datetime.strptime(match.date, date_format) <= end_date]
