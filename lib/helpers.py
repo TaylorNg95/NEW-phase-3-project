@@ -1,4 +1,5 @@
 import subprocess
+import ipdb
 
 def clear_screen():
     subprocess.run('clear')
@@ -22,4 +23,5 @@ def check_proceed():
 
 def exit_program():
     print("Goodbye!")
+    ipdb.set_trace()
     exit()

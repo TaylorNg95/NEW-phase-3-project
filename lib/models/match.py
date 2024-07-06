@@ -108,4 +108,4 @@ class Match:
         date_format = "%m-%d-%y"
         start_date = datetime.strptime(start, date_format)
         end_date = datetime.strptime(end, date_format)
-        return [match.date for match_id, match in Match.all.items() if start_date <= datetime.strptime(match.date, date_format) <= end_date]
+        return [match for match_id, match in Match.all.items() if start_date <= datetime.strptime(match.date, date_format) <= end_date]

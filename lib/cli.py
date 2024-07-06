@@ -208,4 +208,33 @@ class Cli:
             self.matches_by_opponent()
 
     def matches_by_date(self):
-        pass
+        print('')
+        print('In order to search matches by date, you must enter a start date and end date.')
+        choice = check_proceed()
+        if choice == '1':
+            try:
+                start = input('Enter start date (MM-DD-YY): ')
+                end = input('Enter end date (MM-DD-YY): ')
+                matches = Match.search_by_date(start, end)
+                clear_screen()
+                print(f'MATCHES FROM {start} TO {end}:')
+                print('')
+                for match in matches:
+                    # adjust spacing to ensure alignment depending on ID length
+                    spacing = '  '
+                    if 10 <= match.id < 100:
+                        spacing = ' '
+                    elif 100 <= match.id < 1000:
+                        spacing = ''
+                    print(f'ID: {match.id}{spacing}| DATE: {match.date} | OUTCOME: {"W" if match.outcome == 1 else "L"} | OPPONENT: {match.opponent_id}')
+                    print('------')
+                self.options()
+            except:
+                show_user_error('Invalid dates. Please try again.')
+                self.matches_by_opponent()
+        elif choice == '2':
+            clear_screen()
+            self.options()
+        else:
+            show_user_error()
+            self.matches_by_date()
