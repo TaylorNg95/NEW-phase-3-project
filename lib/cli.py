@@ -54,15 +54,18 @@ class Cli:
         all_matches = [value for key, value in Match.all.items()]
         print('ALL MATCHES:')
         print('')
-        for match in all_matches:
-            # adjust spacing to ensure alignment depending on ID length
-            spacing = '  '
-            if 10 <= match.id < 100:
-                spacing = ' '
-            elif 100 <= match.id < 1000:
-                spacing = ''
-            print(f'ID: {match.id}{spacing}| DATE: {match.date} | OUTCOME: {"W" if match.outcome == 1 else "L"} | OPPONENT: {match.opponent_id}')
-            print('------')
+        if all_matches:
+            for match in all_matches:
+                # adjust spacing to ensure alignment depending on ID length
+                spacing = '  '
+                if 10 <= match.id < 100:
+                    spacing = ' '
+                elif 100 <= match.id < 1000:
+                    spacing = ''
+                print(f'ID: {match.id}{spacing}| DATE: {match.date} | OUTCOME: {"W" if match.outcome == 1 else "L"} | OPPONENT: {match.opponent_id}')
+                print('------')
+        else:
+            print('No existing match records.')
         self.options()
 
     def add_new_match(self):
@@ -81,19 +84,32 @@ class Cli:
         all_opponents = [value for key, value in Opponent.all.items()]
         print('ALL OPPONENTS:')
         print('')
-        for opponent in all_opponents:
-            # adjust spacing to ensure alignment depending on ID length
-            spacing = '  '
-            if 10 <= opponent.id < 100:
-                spacing = ' '
-            elif 100 <= opponent.id < 1000:
-                spacing = ''
-            print(f'ID: {opponent.id}{spacing}| {opponent.name}')
-            print('------')
+        if all_opponents:
+            for opponent in all_opponents:
+                # adjust spacing to ensure alignment depending on ID length
+                spacing = '  '
+                if 10 <= opponent.id < 100:
+                    spacing = ' '
+                elif 100 <= opponent.id < 1000:
+                    spacing = ''
+                print(f'ID: {opponent.id}{spacing}| {opponent.name}')
+                print('------')
+        else:
+            print('No existing opponent records.')
         self.options()
 
     def add_new_opponent(self):
-        pass
+        print('ADD NEW OPPONENT:')
+        print('')
+        name = input('Enter name: ')
+        try:
+            Opponent.create_opponent(name)
+            print('Successfully added new opponent!')
+            self.options()
+        except:
+            print('Invalid input. Please try again!')
+            print('')
+            self.add_new_opponent()
 
     def delete_existing_opponent(self):
         pass
