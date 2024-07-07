@@ -5,7 +5,7 @@ from helpers import (
     check_proceed,
     return_to_main_menu,
     calc_match_spacing,
-    print_matches,
+    print_match,
     exit_program
     )
 from models.match import Match
@@ -63,7 +63,7 @@ class Cli:
         if all_matches:
             for match in all_matches:
                 spacing = calc_match_spacing(match)
-                print_matches(match, spacing)
+                print_match(match, spacing)
         else:
             print('No existing match records.')
         self.options()
@@ -73,15 +73,25 @@ class Cli:
         print('In order to add a new match, you must know the opponent ID.')
         choice = check_proceed()
         if choice == '1':
+            date = input('Enter date (MM-DD-YY): ')
+            outcome = input('Enter outcome (1 = win, 0 = loss): ')
+            opponent_id = input('Enter opponent ID: ')
+            
+            # Account for non-integer opponent_id input
             try:
-                date = input('Enter date (MM-DD-YY): ')
-                outcome = input('Enter outcome (1 = win, 0 = loss): ')
-                opponent_id = input('Enter opponent ID: ')
-                if Opponent.all.get(int(opponent_id)):
+                opponent_id = int(opponent_id)
+            except:
+                show_user_error('Opponent ID must be an integer. Please try again.')
+                self.add_new_match()
+            
+            # Check if integer opponent_id exists and create the match - catch any subsequent errors in date or outcome
+            try:
+                opponent = Opponent.all.get(opponent_id)
+                if Opponent.all.get(opponent_id):
                     Match.create_match(date=date, outcome=outcome, opponent_id=opponent_id)
                     print('Successfully added new match!')
                 else:
-                    show_user_error('Invalid opponent ID. Please try again.')
+                    show_user_error('Opponent ID does not exist. Please try again.')
                     self.add_new_match()
             except Exception as e:
                 show_user_error(e)
@@ -179,7 +189,7 @@ class Cli:
                 if matches:
                     for match in matches:
                         spacing = calc_match_spacing(match)
-                        print_matches(match, spacing)
+                        print_match(match, spacing)
                 else:
                     print('No match records against this opponent.')
             except:
@@ -207,7 +217,7 @@ class Cli:
                 if matches:
                     for match in matches:
                         spacing = calc_match_spacing(match)
-                        print_matches(match, spacing)
+                        print_match(match, spacing)
                 else:
                     print('No match records during this date range.')
             except:

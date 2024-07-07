@@ -1,4 +1,5 @@
 import subprocess
+from models.opponent import Opponent
 
 def clear_screen():
     subprocess.run('clear')
@@ -37,8 +38,9 @@ def calc_match_spacing(obj):
         spacing = ''
     return spacing
 
-def print_matches(match, spacing):
-    print(f'ID: {match.id}{spacing}| DATE: {match.date} | OUTCOME: {"W" if match.outcome == 1 else "L"} | OPPONENT: {match.opponent_id}')
+def print_match(match, spacing):
+    opponent_name = Opponent.all.get(match.opponent_id).name
+    print(f'ID: {match.id}{spacing}| DATE: {match.date} | OUTCOME: {"W" if match.outcome == 1 else "L"} | OPPONENT: {opponent_name}')
     print('------')
 
 def exit_program():
