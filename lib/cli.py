@@ -5,6 +5,7 @@ from helpers import (
     check_proceed,
     return_to_main_menu,
     calc_match_spacing,
+    print_matches,
     exit_program
     )
 from models.match import Match
@@ -62,8 +63,7 @@ class Cli:
         if all_matches:
             for match in all_matches:
                 spacing = calc_match_spacing(match)
-                print(f'ID: {match.id}{spacing}| DATE: {match.date} | OUTCOME: {"W" if match.outcome == 1 else "L"} | OPPONENT: {match.opponent_id}')
-                print('------')
+                print_matches(match, spacing)
         else:
             print('No existing match records.')
         self.options()
@@ -79,7 +79,6 @@ class Cli:
                 opponent_id = input('Enter opponent ID: ')
                 Match.create_match(date=date, outcome=outcome, opponent_id=opponent_id)
                 print('Successfully added new match!')
-                self.options()
             except Exception as e:
                 show_user_error(e)
                 self.add_new_match()
@@ -88,6 +87,7 @@ class Cli:
         else:
             show_user_error()
             self.add_new_match()
+        self.options()
 
     def delete_existing_match(self):
         print_header('DELETE MATCH:')
@@ -99,7 +99,6 @@ class Cli:
                 match = Match.find_by_id(match_id)
                 match.delete_match()
                 print('Successfully deleted match!')
-                self.options()
             except:
                 show_user_error('Invalid match ID. Please try again.')
                 self.delete_existing_match()
@@ -108,6 +107,7 @@ class Cli:
         else:
             show_user_error()
             self.delete_existing_match()
+        self.options()
 
     def view_all_opponents(self):
         print_header('ALL OPPONENTS:')
@@ -130,7 +130,6 @@ class Cli:
             try:
                 Opponent.create_opponent(name=name)
                 print('Successfully added new opponent!')
-                self.options()
             except Exception as e:
                 show_user_error(e)
                 self.add_new_opponent()
@@ -139,6 +138,7 @@ class Cli:
         else:
             show_user_error()
             self.add_new_opponent()
+        self.options()
 
     def delete_existing_opponent(self):
         print_header('DELETE OPPONENT:')
@@ -150,7 +150,6 @@ class Cli:
                 opponent = Opponent.find_by_id(opponent_id)
                 opponent.delete_opponent()
                 print('Successfully deleted opponent!')
-                self.options()
             except:
                 show_user_error('Invalid opponent ID. Please try again.')
                 self.delete_existing_opponent()
@@ -159,6 +158,7 @@ class Cli:
         else:
             show_user_error()
             self.delete_existing_opponent()
+        self.options()
 
     def matches_by_opponent(self):
         print_header('SEARCH MATCHES BY OPPONENT:')
@@ -172,11 +172,12 @@ class Cli:
                 clear_screen()
                 print(f'MATCHES AGAINST {opponent.name.upper()}:')
                 print('')
-                for match in matches:
-                    spacing = calc_match_spacing(match)
-                    print(f'ID: {match.id}{spacing}| DATE: {match.date} | OUTCOME: {"W" if match.outcome == 1 else "L"} | OPPONENT: {match.opponent_id}')
-                    print('------')
-                self.options()
+                if matches:
+                    for match in matches:
+                        spacing = calc_match_spacing(match)
+                        print_matches(match, spacing)
+                else:
+                    print('No match records against this opponent.')
             except:
                 show_user_error('Invalid opponent ID. Please try again.')
                 self.matches_by_opponent()
@@ -185,6 +186,7 @@ class Cli:
         else:
             show_user_error()
             self.matches_by_opponent()
+        self.options()
 
     def matches_by_date(self):
         print_header('SEARCH MATCHES BY DATE:')
@@ -198,16 +200,18 @@ class Cli:
                 clear_screen()
                 print(f'MATCHES FROM {start} TO {end}:')
                 print('')
-                for match in matches:
-                    spacing = calc_match_spacing(match)
-                    print(f'ID: {match.id}{spacing}| DATE: {match.date} | OUTCOME: {"W" if match.outcome == 1 else "L"} | OPPONENT: {match.opponent_id}')
-                    print('------')
-                self.options()
+                if matches:
+                    for match in matches:
+                        spacing = calc_match_spacing(match)
+                        print_matches(match, spacing)
+                else:
+                    print('No match records during this date range.')
             except:
                 show_user_error('Invalid dates. Please try again.')
-                self.matches_by_opponent()
+                self.matches_by_date()
         elif choice == '2':
             return_to_main_menu(self)
         else:
             show_user_error()
             self.matches_by_date()
+        self.options()

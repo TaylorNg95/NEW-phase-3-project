@@ -37,6 +37,10 @@ def calc_match_spacing(obj):
         spacing = ''
     return spacing
 
+def print_matches(match, spacing):
+    print(f'ID: {match.id}{spacing}| DATE: {match.date} | OUTCOME: {"W" if match.outcome == 1 else "L"} | OPPONENT: {match.opponent_id}')
+    print('------')
+
 def exit_program():
     print("Goodbye!")
     exit()
