@@ -1,8 +1,11 @@
 import subprocess
-import ipdb
 
 def clear_screen():
     subprocess.run('clear')
+
+def print_header(header):
+    print(header)
+    print('')
 
 def show_user_error(e=''):
     if e:
@@ -32,5 +35,4 @@ def calc_match_spacing(obj):
 
 def exit_program():
     print("Goodbye!")
-    ipdb.set_trace()
     exit()

@@ -1,7 +1,13 @@
-from helpers import clear_screen, show_user_error, check_proceed, calc_match_spacing, exit_program
+from helpers import (
+    clear_screen,
+    print_header,
+    show_user_error,
+    check_proceed,
+    calc_match_spacing,
+    exit_program
+    )
 from models.match import Match
 from models.opponent import Opponent
-""" import ipdb """
 
 class Cli:
 
@@ -26,7 +32,6 @@ class Cli:
 
     def selection(self):
         sel = input('Enter selection: ')
-        """ ipdb.set_trace() """
         clear_screen()
         if sel == '1':
             self.view_all_matches()
@@ -51,9 +56,8 @@ class Cli:
             self.options()
 
     def view_all_matches(self):
+        print_header('ALL MATCHES:')
         all_matches = [value for key, value in Match.all.items()]
-        print('ALL MATCHES:')
-        print('')
         if all_matches:
             for match in all_matches:
                 spacing = calc_match_spacing(match)
@@ -64,8 +68,7 @@ class Cli:
         self.options()
 
     def add_new_match(self):
-        print('ADD NEW MATCH:')
-        print('')
+        print_header('ADD NEW MATCH:')
         print('In order to add a new match, you must know the opponent ID.')
         choice = check_proceed()
         if choice == '1':
@@ -87,8 +90,7 @@ class Cli:
             self.add_new_match()
 
     def delete_existing_match(self):
-        print('DELETE MATCH:')
-        print('')
+        print_header('DELETE MATCH:')
         print('In order to delete a match, you must know the match ID.')
         choice = check_proceed()
         if choice == '1':
@@ -109,9 +111,8 @@ class Cli:
             self.delete_existing_match()
 
     def view_all_opponents(self):
+        print_header('ALL OPPONENTS:')
         all_opponents = [value for key, value in Opponent.all.items()]
-        print('ALL OPPONENTS:')
-        print('')
         if all_opponents:
             for opponent in all_opponents:
                 spacing = calc_match_spacing(opponent)
@@ -122,8 +123,7 @@ class Cli:
         self.options()
 
     def add_new_opponent(self):
-        print('ADD NEW OPPONENT:')
-        print('')
+        print_header('ADD NEW OPPONENT:')
         print('In order to add a new opponent, you must enter the opponent\'s name.')
         choice = check_proceed()
         if choice == '1':
@@ -143,8 +143,7 @@ class Cli:
             self.add_new_opponent()
 
     def delete_existing_opponent(self):
-        print('DELETE OPPONENT:')
-        print('')
+        print_header('DELETE OPPONENT:')
         print('In order to delete an opponent, you must know the opponent ID.')
         choice = check_proceed()
         if choice == '1':
@@ -165,8 +164,7 @@ class Cli:
             self.delete_existing_opponent()
 
     def matches_by_opponent(self):
-        print('SEARCH MATCHES BY OPPONENT:')
-        print('')
+        print_header('SEARCH MATCHES BY OPPONENT:')
         print('In order to search matches by opponent, you must know the opponent ID.')
         choice = check_proceed()
         if choice == '1':
@@ -193,8 +191,7 @@ class Cli:
             self.matches_by_opponent()
 
     def matches_by_date(self):
-        print('SEARCH MATCHES BY DATE:')
-        print('')
+        print_header('SEARCH MATCHES BY DATE:')
         print('In order to search matches by date, you must enter a start date and end date.')
         choice = check_proceed()
         if choice == '1':

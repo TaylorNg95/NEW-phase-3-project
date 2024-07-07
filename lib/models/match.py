@@ -1,6 +1,5 @@
 import re
 from __init__ import CONN, CURSOR
-import ipdb
 from datetime import datetime
 
 class Match:
