@@ -4,14 +4,12 @@ from helpers import (
     show_user_error,
     check_proceed,
     return_to_main_menu,
-    calc_match_spacing,
     print_match,
     print_opponent,
     exit_program
     )
 from models.match import Match
 from models.opponent import Opponent
-import ipdb
 
 class Cli:
 
@@ -70,8 +68,7 @@ class Cli:
         all_matches = [value for key, value in Match.all.items()]
         if all_matches:
             for match in all_matches:
-                spacing = calc_match_spacing(match)
-                print_match(match, spacing)
+                print_match(match)
         else:
             print('No existing match records.')
         self.options()
@@ -86,8 +83,7 @@ class Cli:
                 match = Match.find_by_id(int(id))
                 clear_screen()
                 print('')
-                spacing = calc_match_spacing(match)
-                print_match(match, spacing)
+                print_match(match)
             except:
                 show_user_error('Invalid match ID. Please try again.')
                 self.find_match_by_id()
@@ -158,8 +154,7 @@ class Cli:
         all_opponents = [value for key, value in Opponent.all.items()]
         if all_opponents:
             for opponent in all_opponents:
-                spacing = calc_match_spacing(opponent)
-                print_opponent(opponent, spacing)
+                print_opponent(opponent)
         else:
             print('No existing opponent records.')
         self.options()
@@ -174,8 +169,7 @@ class Cli:
                 opponent = Opponent.find_by_id(int(id))
                 clear_screen()
                 print('')
-                spacing = calc_match_spacing(opponent)
-                print_opponent(opponent, spacing)
+                print_opponent(opponent)
             except:
                 show_user_error('Invalid match ID. Please try again.')
                 self.find_match_by_id()
@@ -239,8 +233,7 @@ class Cli:
                 print('')
                 if matches:
                     for match in matches:
-                        spacing = calc_match_spacing(match)
-                        print_match(match, spacing)
+                        print_match(match)
                 else:
                     print('No match records against this opponent.')
             except:
@@ -267,8 +260,7 @@ class Cli:
                 print('')
                 if matches:
                     for match in matches:
-                        spacing = calc_match_spacing(match)
-                        print_match(match, spacing)
+                        print_match(match)
                 else:
                     print('No match records during this date range.')
             except:

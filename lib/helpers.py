@@ -38,12 +38,14 @@ def calc_match_spacing(obj):
         spacing = ''
     return spacing
 
-def print_match(match, spacing):
+def print_match(match):
     opponent_name = Opponent.all.get(match.opponent_id).name
+    spacing = calc_match_spacing(match)
     print(f'ID: {match.id}{spacing}| DATE: {match.date} | OUTCOME: {"W" if match.outcome == 1 else "L"} | OPPONENT: {opponent_name}')
     print('------')
 
-def print_opponent(opponent, spacing):
+def print_opponent(opponent):
+    spacing = calc_match_spacing(opponent)
     print(f'ID: {opponent.id}{spacing}| {opponent.name}')
     print('------')
 
