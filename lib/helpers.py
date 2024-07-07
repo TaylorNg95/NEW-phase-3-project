@@ -24,6 +24,10 @@ def check_proceed():
     choice = input('Enter selection: ')
     return choice
 
+def return_to_main_menu(self):
+    clear_screen()
+    self.options()
+
 def calc_match_spacing(obj):
     # custom spacing for record IDs of differing lengths (formatting purposes only)
     spacing = '  '

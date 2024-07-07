@@ -3,6 +3,7 @@ from helpers import (
     print_header,
     show_user_error,
     check_proceed,
+    return_to_main_menu,
     calc_match_spacing,
     exit_program
     )
@@ -83,8 +84,7 @@ class Cli:
                 show_user_error(e)
                 self.add_new_match()
         elif choice == '2':
-            clear_screen()
-            self.options()
+            return_to_main_menu(self)
         else:
             show_user_error()
             self.add_new_match()
@@ -104,8 +104,7 @@ class Cli:
                 show_user_error('Invalid match ID. Please try again.')
                 self.delete_existing_match()
         elif choice == '2':
-            clear_screen()
-            self.options()
+            return_to_main_menu(self)
         else:
             show_user_error()
             self.delete_existing_match()
@@ -136,8 +135,7 @@ class Cli:
                 show_user_error(e)
                 self.add_new_opponent()
         elif choice == '2':
-            clear_screen()
-            self.options()
+            return_to_main_menu(self)
         else:
             show_user_error()
             self.add_new_opponent()
@@ -157,8 +155,7 @@ class Cli:
                 show_user_error('Invalid opponent ID. Please try again.')
                 self.delete_existing_opponent()
         elif choice == '2':
-            clear_screen()
-            self.options()
+            return_to_main_menu(self)
         else:
             show_user_error()
             self.delete_existing_opponent()
@@ -184,8 +181,7 @@ class Cli:
                 show_user_error('Invalid opponent ID. Please try again.')
                 self.matches_by_opponent()
         elif choice == '2':
-            clear_screen()
-            self.options()
+            return_to_main_menu(self)
         else:
             show_user_error()
             self.matches_by_opponent()
@@ -211,8 +207,7 @@ class Cli:
                 show_user_error('Invalid dates. Please try again.')
                 self.matches_by_opponent()
         elif choice == '2':
-            clear_screen()
-            self.options()
+            return_to_main_menu(self)
         else:
             show_user_error()
             self.matches_by_date()
