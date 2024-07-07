@@ -91,7 +91,7 @@ class Cli:
                     Match.create_match(date=date, outcome=outcome, opponent_id=opponent_id)
                     print('Successfully added new match!')
                 else:
-                    show_user_error('Opponent ID does not exist. Please try again.')
+                    show_user_error('Invalid opponent ID. Please try again.')
                     self.add_new_match()
             except Exception as e:
                 show_user_error(e)
@@ -207,9 +207,9 @@ class Cli:
         print('In order to search matches by date, you must enter a start date and end date.')
         choice = check_proceed()
         if choice == '1':
+            start = input('Enter start date (MM-DD-YY): ')
+            end = input('Enter end date (MM-DD-YY): ')
             try:
-                start = input('Enter start date (MM-DD-YY): ')
-                end = input('Enter end date (MM-DD-YY): ')
                 matches = Match.search_by_date(start, end)
                 clear_screen()
                 print(f'MATCHES FROM {start} TO {end}:')

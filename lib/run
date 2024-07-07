@@ -15,9 +15,3 @@ Opponent.get_all()
 Match.get_all()
 
 Cli().run()
-""" Opponent.create_opponent('Taylor')
-Opponent.create_opponent('Kat')
-Opponent.create_opponent('Brittany')
-Match.create_match('07-05-24', '1', 1)
-Match.create_match('06-04-24', '0', 2)
-Match.create_match('06-03-24', '1', 3) """
