@@ -21,6 +21,15 @@ def check_proceed():
     choice = input('Enter selection: ')
     return choice
 
+def calc_match_spacing(obj):
+    # custom spacing for record IDs of differing lengths (formatting purposes only)
+    spacing = '  '
+    if 10 <= obj.id < 100:
+        spacing = ' '
+    elif 100 <= obj.id < 1000:
+        spacing = ''
+    return spacing
+
 def exit_program():
     print("Goodbye!")
     ipdb.set_trace()

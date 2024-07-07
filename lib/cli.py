@@ -1,4 +1,4 @@
-from helpers import clear_screen, show_user_error, check_proceed, exit_program
+from helpers import clear_screen, show_user_error, check_proceed, calc_match_spacing, exit_program
 from models.match import Match
 from models.opponent import Opponent
 """ import ipdb """
@@ -56,12 +56,7 @@ class Cli:
         print('')
         if all_matches:
             for match in all_matches:
-                # adjust spacing to ensure alignment depending on ID length
-                spacing = '  '
-                if 10 <= match.id < 100:
-                    spacing = ' '
-                elif 100 <= match.id < 1000:
-                    spacing = ''
+                spacing = calc_match_spacing(match)
                 print(f'ID: {match.id}{spacing}| DATE: {match.date} | OUTCOME: {"W" if match.outcome == 1 else "L"} | OPPONENT: {match.opponent_id}')
                 print('------')
         else:
@@ -119,12 +114,7 @@ class Cli:
         print('')
         if all_opponents:
             for opponent in all_opponents:
-                # adjust spacing to ensure alignment depending on ID length
-                spacing = '  '
-                if 10 <= opponent.id < 100:
-                    spacing = ' '
-                elif 100 <= opponent.id < 1000:
-                    spacing = ''
+                spacing = calc_match_spacing(opponent)
                 print(f'ID: {opponent.id}{spacing}| {opponent.name}')
                 print('------')
         else:
@@ -188,12 +178,7 @@ class Cli:
                 print(f'MATCHES AGAINST {opponent.name.upper()}:')
                 print('')
                 for match in matches:
-                    # adjust spacing to ensure alignment depending on ID length
-                    spacing = '  '
-                    if 10 <= match.id < 100:
-                        spacing = ' '
-                    elif 100 <= match.id < 1000:
-                        spacing = ''
+                    spacing = calc_match_spacing(match)
                     print(f'ID: {match.id}{spacing}| DATE: {match.date} | OUTCOME: {"W" if match.outcome == 1 else "L"} | OPPONENT: {match.opponent_id}')
                     print('------')
                 self.options()
@@ -208,6 +193,7 @@ class Cli:
             self.matches_by_opponent()
 
     def matches_by_date(self):
+        print('SEARCH MATCHES BY DATE:')
         print('')
         print('In order to search matches by date, you must enter a start date and end date.')
         choice = check_proceed()
@@ -220,12 +206,7 @@ class Cli:
                 print(f'MATCHES FROM {start} TO {end}:')
                 print('')
                 for match in matches:
-                    # adjust spacing to ensure alignment depending on ID length
-                    spacing = '  '
-                    if 10 <= match.id < 100:
-                        spacing = ' '
-                    elif 100 <= match.id < 1000:
-                        spacing = ''
+                    spacing = calc_match_spacing(match)
                     print(f'ID: {match.id}{spacing}| DATE: {match.date} | OUTCOME: {"W" if match.outcome == 1 else "L"} | OPPONENT: {match.opponent_id}')
                     print('------')
                 self.options()
