@@ -43,6 +43,10 @@ def print_match(match, spacing):
     print(f'ID: {match.id}{spacing}| DATE: {match.date} | OUTCOME: {"W" if match.outcome == 1 else "L"} | OPPONENT: {opponent_name}')
     print('------')
 
+def print_opponent(opponent, spacing):
+    print(f'ID: {opponent.id}{spacing}| {opponent.name}')
+    print('------')
+
 def exit_program():
     print("Goodbye!")
     exit()

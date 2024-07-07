@@ -6,6 +6,7 @@ from helpers import (
     return_to_main_menu,
     calc_match_spacing,
     print_match,
+    print_opponent,
     exit_program
     )
 from models.match import Match
@@ -26,10 +27,11 @@ class Cli:
         print('Type "3" to add new match')
         print('Type "4" to delete existing match')
         print('Type "5" to view all opponents')
-        print('Type "6" to add new opponent')
-        print('Type "7" to delete existing opponent')
-        print('Type "8" to search matches by opponent')
-        print('Type "9" to search matches by date')
+        print('Type "6" to find opponent by ID')
+        print('Type "7" to add new opponent')
+        print('Type "8" to delete existing opponent')
+        print('Type "9" to search matches by opponent')
+        print('Type "10" to search matches by date')
         print('Type "exit" to exit program')
         print('')
         self.selection()
@@ -48,12 +50,14 @@ class Cli:
         elif sel == '5':
             self.view_all_opponents()
         elif sel == '6':
-            self.add_new_opponent()
+            self.find_opponent_by_id()
         elif sel == '7':
-            self.delete_existing_opponent()
+            self.add_new_opponent()
         elif sel == '8':
-            self.matches_by_opponent()
+            self.delete_existing_opponent()
         elif sel == '9':
+            self.matches_by_opponent()
+        elif sel == '10':
             self.matches_by_date()
         elif sel.lower() == 'exit':
             exit_program()
@@ -155,10 +159,31 @@ class Cli:
         if all_opponents:
             for opponent in all_opponents:
                 spacing = calc_match_spacing(opponent)
-                print(f'ID: {opponent.id}{spacing}| {opponent.name}')
-                print('------')
+                print_opponent(opponent, spacing)
         else:
             print('No existing opponent records.')
+        self.options()
+
+    def find_opponent_by_id(self):
+        print_header('FIND OPPONENT BY ID:')
+        print('Opponent ID is required.')
+        choice = check_proceed()
+        if choice == '1':
+            id = input('Enter opponent id: ')
+            try:
+                opponent = Opponent.find_by_id(int(id))
+                clear_screen()
+                print('')
+                spacing = calc_match_spacing(opponent)
+                print_opponent(opponent, spacing)
+            except:
+                show_user_error('Invalid match ID. Please try again.')
+                self.find_match_by_id()
+        elif choice == '2':
+            return_to_main_menu(self)
+        else:
+            show_user_error()
+            self.find_match_by_id()
         self.options()
 
     def add_new_opponent(self):
