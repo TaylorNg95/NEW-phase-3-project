@@ -14,7 +14,7 @@ def show_user_error(e=''):
         print('')
     else:
         print('')
-        print('Invalid input. Please try again!')
+        print('Invalid selection. Please try again!')
         print('')
 
 def check_proceed():

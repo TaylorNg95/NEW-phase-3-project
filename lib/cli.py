@@ -77,8 +77,12 @@ class Cli:
                 date = input('Enter date (MM-DD-YY): ')
                 outcome = input('Enter outcome (1 = win, 0 = loss): ')
                 opponent_id = input('Enter opponent ID: ')
-                Match.create_match(date=date, outcome=outcome, opponent_id=opponent_id)
-                print('Successfully added new match!')
+                if Opponent.all.get(int(opponent_id)):
+                    Match.create_match(date=date, outcome=outcome, opponent_id=opponent_id)
+                    print('Successfully added new match!')
+                else:
+                    show_user_error('Invalid opponent ID. Please try again.')
+                    self.add_new_match()
             except Exception as e:
                 show_user_error(e)
                 self.add_new_match()
