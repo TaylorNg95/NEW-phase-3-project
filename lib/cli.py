@@ -2,7 +2,6 @@ from helpers import (
     clear_screen,
     print_header,
     show_user_error,
-    check_proceed,
     return_to_main_menu,
     print_match,
     print_opponent,
@@ -118,16 +117,16 @@ class Cli:
                 self.add_new_match()
             
             # Check if integer opponent_id exists and create the match - catch any subsequent errors in date or outcome
-            try:
-                opponent = Opponent.all.get(opponent_id)
-                if opponent:
+            opponent = Opponent.all.get(opponent_id)
+            if opponent:
+                try:
                     Match.create_match(date=date, outcome=outcome, opponent_id=opponent_id)
                     print('Successfully added new match!')
-                else:
-                    show_user_error('Invalid opponent ID. Please try again.')
+                except Exception as e:
+                    show_user_error(e)
                     self.add_new_match()
-            except Exception as e:
-                show_user_error(e)
+            else:
+                show_user_error('Invalid opponent ID. Please try again.')
                 self.add_new_match()
         self.options()
 

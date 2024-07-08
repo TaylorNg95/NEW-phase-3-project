@@ -18,13 +18,6 @@ def show_user_error(e=''):
         print('Invalid selection. Please try again!')
         print('')
 
-def check_proceed():
-    print('Type "1" to proceed')
-    print('Type "2" to return to main menu')
-    print('')
-    choice = input('Enter selection: ')
-    return choice
-
 def return_to_main_menu(self):
     clear_screen()
     self.options()

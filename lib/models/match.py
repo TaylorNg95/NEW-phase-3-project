@@ -1,6 +1,7 @@
 import re
 from __init__ import CONN, CURSOR
 from datetime import datetime
+import ipdb
 
 class Match:
     all = {}
@@ -29,11 +30,14 @@ class Match:
     
     @outcome.setter
     def outcome(self, outcome):
-        outcome_int = int(outcome)
-        if outcome_int == 1 or outcome_int == 0:
-            self._outcome = outcome_int
-        else:
-            raise Exception('Outcome must be 1 or 0')
+        try:
+            outcome_int = int(outcome)
+            if outcome_int == 1 or outcome_int == 0:
+                self._outcome = outcome_int
+            else:
+                raise Exception('Outcome must be 1 or 0')
+        except:
+            raise Exception('Outcome must be 1 or 0') 
         
     @classmethod
     def create_table(cls):
