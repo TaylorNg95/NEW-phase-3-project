@@ -197,22 +197,18 @@ class Cli:
         print_header('DELETE OPPONENT:')
         print('**IMPORTANT NOTE: Deleting an opponent will also delete any associated match records.**')
         print('')
-        print('Opponent ID is required.')
-        choice = check_proceed()
-        if choice == '1':
+        opp_id = input('Enter opponent ID (or type "m" to return to main menu): ')
+        if opp_id == 'm' or opp_id == 'M':
+            return_to_main_menu(self)
+        else:
             try:
-                opponent_id = int(input('Enter opponent ID: '))
-                opponent = Opponent.find_by_id(opponent_id)
+                opp_id_int = int(opp_id)
+                opponent = Opponent.find_by_id(opp_id_int)
                 opponent.delete_opponent()
                 print('Successfully deleted opponent!')
             except:
                 show_user_error('Invalid opponent ID. Please try again.')
                 self.delete_opponent()
-        elif choice == '2':
-            return_to_main_menu(self)
-        else:
-            show_user_error()
-            self.delete_opponent()
         self.options()
 
     def matches_by_opponent(self):
