@@ -36,7 +36,23 @@ class Match:
             else:
                 raise Exception('Outcome must be 1 or 0')
         except:
-            raise Exception('Outcome must be 1 or 0') 
+            raise Exception('Outcome must be 1 or 0')
+        
+    @property
+    def opponent_id(self):
+        return self._opponent_id
+    
+    @opponent_id.setter
+    def opponent_id(self, opponent_id):
+        from models.opponent import Opponent
+        try:
+            opponent_id = int(opponent_id)
+        except:
+            raise Exception('Invalid opponent ID. Please try again.')
+        if Opponent.all.get(opponent_id):
+            self._opponent_id = opponent_id
+        else:
+            raise Exception('Invalid opponent ID. Please try again.')
         
     @classmethod
     def create_table(cls):

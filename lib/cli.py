@@ -3,6 +3,7 @@ from helpers import (
     print_header,
     show_user_error,
     return_to_main_menu,
+    check_return_to_main_menu,
     print_match,
     print_opponent,
     exit_program
@@ -71,7 +72,7 @@ class Cli:
         elif sel.lower() == 'exit':
             exit_program()
         else:
-            show_user_error()
+            show_user_error(e='Invalid selection. Please try again.')
             self.options()
 
     def view_all_matches(self):
@@ -87,47 +88,30 @@ class Cli:
     def find_match_by_id(self):
         print_header('FIND MATCH BY ID:')
         id = input('Enter match id (or type "m" to return to main menu): ')
-        if id == 'm' or id == 'M':
-            return_to_main_menu(self)
-        else:
-            try:
-                match = Match.find_by_id(int(id))
-                clear_screen()
-                print('')
-                print_match(match)
-            except:
-                show_user_error('Invalid match ID. Please try again.')
-                self.find_match_by_id()
+        check_return_to_main_menu(self, id)
+        try:
+            match = Match.find_by_id(int(id))
+            clear_screen()
+            print('')
+            print_match(match)
+        except:
+            show_user_error(e='Invalid match ID. Please try again.')
+            self.find_match_by_id()
         self.options()
 
     def add_new_match(self):
         print_header('ADD NEW MATCH:')
         date = input('Enter date in MM-DD-YY format (or type "m" to return to main menu): ')
-        if date == 'm' or date == 'M':
-            return_to_main_menu(self)
-        else:
-            outcome = input('Enter outcome (1 = win, 0 = loss): ')
-            opponent_id = input('Enter opponent ID: ')
-            
-            # Account for non-integer opponent_id input
-            try:
-                opponent_id = int(opponent_id)
-            except:
-                show_user_error('Opponent ID must be an integer. Please try again.')
-                self.add_new_match()
-            
-            # Check if integer opponent_id exists and create the match - catch any subsequent errors in date or outcome
-            opponent = Opponent.all.get(opponent_id)
-            if opponent:
-                try:
-                    Match.create_match(date=date, outcome=outcome, opponent_id=opponent_id)
-                    print('Successfully added new match!')
-                except Exception as e:
-                    show_user_error(e)
-                    self.add_new_match()
-            else:
-                show_user_error('Invalid opponent ID. Please try again.')
-                self.add_new_match()
+        check_return_to_main_menu(self, date)
+        
+        outcome = input('Enter outcome (1 = win, 0 = loss): ')
+        opponent_id = input('Enter opponent ID: ')
+        try:
+            Match.create_match(date=date, outcome=outcome, opponent_id=opponent_id)
+            print('Successfully added new match!')
+        except Exception as e:
+            show_user_error(e)
+            self.add_new_match()
         self.options()
 
     def update_match(self):
@@ -136,17 +120,15 @@ class Cli:
     def delete_match(self):
         print_header('DELETE MATCH:')
         match_id = input('Enter match ID (or type "m" to return to main menu): ')
-        if match_id == 'm' or match_id == 'M':
-            return_to_main_menu(self)
-        else:
-            try:
-                match_id_int = int(match_id)
-                match = Match.find_by_id(match_id_int)
-                match.delete_match()
-                print('Successfully deleted match!')
-            except:
-                show_user_error('Invalid match ID. Please try again.')
-                self.delete_match()
+        check_return_to_main_menu(self, match_id)
+        try:
+            match_id_int = int(match_id)
+            match = Match.find_by_id(match_id_int)
+            match.delete_match()
+            print('Successfully deleted match!')
+        except:
+            show_user_error(e='Invalid match ID. Please try again.')
+            self.delete_match()
         self.options()
 
     def view_all_opponents(self):
@@ -162,31 +144,27 @@ class Cli:
     def find_opponent_by_id(self):
         print_header('FIND OPPONENT BY ID:')
         id = input('Enter opponent id (or type "m" to return to main menu): ')
-        if id == 'm' or id == 'M':
-            return_to_main_menu(self)
-        else:
-            try:
-                opponent = Opponent.find_by_id(int(id))
-                clear_screen()
-                print('')
-                print_opponent(opponent)
-            except:
-                show_user_error('Invalid match ID. Please try again.')
-                self.find_opponent_by_id()
+        check_return_to_main_menu(self, id)
+        try:
+            opponent = Opponent.find_by_id(int(id))
+            clear_screen()
+            print('')
+            print_opponent(opponent)
+        except:
+            show_user_error(e='Invalid opponent ID. Please try again.')
+            self.find_opponent_by_id()
         self.options()
 
     def add_new_opponent(self):
         print_header('ADD NEW OPPONENT:')
         name = input('Enter name (or type "m" to return to main menu): ')
-        if name == 'm' or name == 'M':
-            return_to_main_menu(self)
-        else:
-            try:
-                Opponent.create_opponent(name=name)
-                print('Successfully added new opponent!')
-            except Exception as e:
-                show_user_error(e)
-                self.add_new_opponent()
+        check_return_to_main_menu(self, name)
+        try:
+            Opponent.create_opponent(name=name)
+            print('Successfully added new opponent!')
+        except Exception as e:
+            show_user_error(e)
+            self.add_new_opponent()
         self.options()
 
     def update_opponent(self):
@@ -197,60 +175,54 @@ class Cli:
         print('**IMPORTANT NOTE: Deleting an opponent will also delete any associated match records.**')
         print('')
         opp_id = input('Enter opponent ID (or type "m" to return to main menu): ')
-        if opp_id == 'm' or opp_id == 'M':
-            return_to_main_menu(self)
-        else:
-            try:
-                opp_id_int = int(opp_id)
-                opponent = Opponent.find_by_id(opp_id_int)
-                opponent.delete_opponent()
-                print('Successfully deleted opponent!')
-            except:
-                show_user_error('Invalid opponent ID. Please try again.')
-                self.delete_opponent()
+        check_return_to_main_menu(self, opp_id)
+        try:
+            opp_id_int = int(opp_id)
+            opponent = Opponent.find_by_id(opp_id_int)
+            opponent.delete_opponent()
+            print('Successfully deleted opponent!')
+        except:
+            show_user_error(e='Invalid opponent ID. Please try again.')
+            self.delete_opponent()
         self.options()
 
     def matches_by_opponent(self):
         print_header('SEARCH MATCHES BY OPPONENT:')
         opp_id = input('Enter opponent ID (or type "m" to return to main menu): ')
-        if opp_id == 'm' or opp_id == 'M':
-            return_to_main_menu(self)
-        else:
-            try:
-                opp_id_int = int(opp_id)
-                opponent = Opponent.find_by_id(opp_id_int)
-                matches = opponent.get_matches()
-                clear_screen()
-                print(f'MATCHES AGAINST {opponent.name.upper()}:')
-                print('')
-                if matches:
-                    for match in matches:
-                        print_match(match)
-                else:
-                    print('No match records against this opponent.')
-            except:
-                show_user_error('Invalid opponent ID. Please try again.')
-                self.matches_by_opponent()
+        check_return_to_main_menu(self, opp_id)
+        try:
+            opp_id_int = int(opp_id)
+            opponent = Opponent.find_by_id(opp_id_int)
+            matches = opponent.get_matches()
+            clear_screen()
+            print(f'MATCHES AGAINST {opponent.name.upper()}:')
+            print('')
+            if matches:
+                for match in matches:
+                    print_match(match)
+            else:
+                print('No match records against this opponent.')
+        except:
+            show_user_error(e='Invalid opponent ID. Please try again.')
+            self.matches_by_opponent()
         self.options()
 
     def matches_by_date(self):
         print_header('SEARCH MATCHES BY DATE:')
         start = input('Enter start date in MM-DD-YY format (or type "m" to return to main menu): ')
-        if start == 'm' or start == 'M':
-            return_to_main_menu(self)
-        else:
-            end = input('Enter end date (MM-DD-YY): ')
-            try:
-                matches = Match.search_by_date(start, end)
-                clear_screen()
-                print(f'MATCHES FROM {start} TO {end}:')
-                print('')
-                if matches:
-                    for match in matches:
-                        print_match(match)
-                else:
-                    print('No match records during this date range.')
-            except:
-                show_user_error('Invalid dates. Please try again.')
-                self.matches_by_date()
+        check_return_to_main_menu(self, start)
+        end = input('Enter end date (MM-DD-YY): ')
+        try:
+            matches = Match.search_by_date(start, end)
+            clear_screen()
+            print(f'MATCHES FROM {start} TO {end}:')
+            print('')
+            if matches:
+                for match in matches:
+                    print_match(match)
+            else:
+                print('No match records during this date range.')
+        except:
+            show_user_error(e='Invalid dates. Please try again.')
+            self.matches_by_date()
         self.options()
