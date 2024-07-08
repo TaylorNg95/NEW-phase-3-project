@@ -42,8 +42,7 @@ class Match:
                 id INTEGER PRIMARY KEY,
                 date TEXT,
                 outcome INTEGER,
-                opponent_id INTEGER,
-                FOREIGN KEY(opponent_id) REFERENCES opponents(id)
+                opponent_id INTEGER
             );
         """
         CURSOR.execute(sql)

@@ -23,13 +23,15 @@ class Cli:
         print('Type "1" to view all matches')
         print('Type "2" to find match by ID')
         print('Type "3" to add new match')
-        print('Type "4" to delete existing match')
-        print('Type "5" to view all opponents')
-        print('Type "6" to find opponent by ID')
-        print('Type "7" to add new opponent')
-        print('Type "8" to delete existing opponent')
-        print('Type "9" to search matches by opponent')
-        print('Type "10" to search matches by date')
+        print('Type "4" to update match')
+        print('Type "5" to delete match')
+        print('Type "6" to view all opponents')
+        print('Type "7" to find opponent by ID')
+        print('Type "8" to add new opponent')
+        print('Type "9" to update opponent')
+        print('Type "10" to delete opponent')
+        print('Type "11" to search matches by opponent')
+        print('Type "12" to search matches by date')
         print('Type "exit" to exit program')
         print('')
         self.selection()
@@ -44,18 +46,22 @@ class Cli:
         elif sel == '3':
             self.add_new_match()
         elif sel == '4':
-            self.delete_existing_match()
+            self.update_match()
         elif sel == '5':
-            self.view_all_opponents()
+            self.delete_match()
         elif sel == '6':
-            self.find_opponent_by_id()
+            self.view_all_opponents()
         elif sel == '7':
-            self.add_new_opponent()
+            self.find_opponent_by_id()
         elif sel == '8':
-            self.delete_existing_opponent()
+            self.add_new_opponent()
         elif sel == '9':
-            self.matches_by_opponent()
+            self.update_opponent()
         elif sel == '10':
+            self.delete_opponent()
+        elif sel == '11':
+            self.matches_by_opponent()
+        elif sel == '12':
             self.matches_by_date()
         elif sel.lower() == 'exit':
             exit_program()
@@ -129,7 +135,10 @@ class Cli:
             self.add_new_match()
         self.options()
 
-    def delete_existing_match(self):
+    def update_match(self):
+        pass
+
+    def delete_match(self):
         print_header('DELETE MATCH:')
         print('Match ID is required.')
         choice = check_proceed()
@@ -141,12 +150,12 @@ class Cli:
                 print('Successfully deleted match!')
             except:
                 show_user_error('Invalid match ID. Please try again.')
-                self.delete_existing_match()
+                self.delete_match()
         elif choice == '2':
             return_to_main_menu(self)
         else:
             show_user_error()
-            self.delete_existing_match()
+            self.delete_match()
         self.options()
 
     def view_all_opponents(self):
@@ -199,8 +208,13 @@ class Cli:
             self.add_new_opponent()
         self.options()
 
-    def delete_existing_opponent(self):
+    def update_opponent(self):
+        pass
+
+    def delete_opponent(self):
         print_header('DELETE OPPONENT:')
+        print('**IMPORTANT NOTE: Deleting an opponent will also delete any associated match records.**')
+        print('')
         print('Opponent ID is required.')
         choice = check_proceed()
         if choice == '1':
@@ -211,12 +225,12 @@ class Cli:
                 print('Successfully deleted opponent!')
             except:
                 show_user_error('Invalid opponent ID. Please try again.')
-                self.delete_existing_opponent()
+                self.delete_opponent()
         elif choice == '2':
             return_to_main_menu(self)
         else:
             show_user_error()
-            self.delete_existing_opponent()
+            self.delete_opponent()
         self.options()
 
     def matches_by_opponent(self):

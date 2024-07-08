@@ -78,7 +78,13 @@ class Opponent:
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
 
+        # Need to mimic cascade behavior; if an opponent is deleted, all related match records should also be deleted
+        sql = "DELETE FROM matches WHERE opponent_id = ?"
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit()
+
         del Opponent.all[self.id]
+        Match.all = {match_id: match for match_id, match in Match.all.items() if match.opponent_id != self.id}
         self.id = None
 
     def get_matches(self):
