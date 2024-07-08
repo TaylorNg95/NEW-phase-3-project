@@ -87,10 +87,10 @@ class Cli:
 
     def find_match_by_id(self):
         print_header('FIND MATCH BY ID:')
-        print('Match ID is required.')
-        choice = check_proceed()
-        if choice == '1':
-            id = input('Enter match id: ')
+        id = input('Enter match id (or type "m" to return to main menu): ')
+        if id == 'm' or id == 'M':
+            return_to_main_menu(self)
+        else:
             try:
                 match = Match.find_by_id(int(id))
                 clear_screen()
@@ -99,19 +99,14 @@ class Cli:
             except:
                 show_user_error('Invalid match ID. Please try again.')
                 self.find_match_by_id()
-        elif choice == '2':
-            return_to_main_menu(self)
-        else:
-            show_user_error()
-            self.find_match_by_id()
         self.options()
 
     def add_new_match(self):
         print_header('ADD NEW MATCH:')
-        print('Opponent ID is required.')
-        choice = check_proceed()
-        if choice == '1':
-            date = input('Enter date (MM-DD-YY): ')
+        date = input('Enter date in MM-DD-YY format (or type "m" to return to main menu): ')
+        if date == 'm' or date == 'M':
+            return_to_main_menu(self)
+        else:
             outcome = input('Enter outcome (1 = win, 0 = loss): ')
             opponent_id = input('Enter opponent ID: ')
             
@@ -125,7 +120,7 @@ class Cli:
             # Check if integer opponent_id exists and create the match - catch any subsequent errors in date or outcome
             try:
                 opponent = Opponent.all.get(opponent_id)
-                if Opponent.all.get(opponent_id):
+                if opponent:
                     Match.create_match(date=date, outcome=outcome, opponent_id=opponent_id)
                     print('Successfully added new match!')
                 else:
@@ -134,11 +129,6 @@ class Cli:
             except Exception as e:
                 show_user_error(e)
                 self.add_new_match()
-        elif choice == '2':
-            return_to_main_menu(self)
-        else:
-            show_user_error()
-            self.add_new_match()
         self.options()
 
     def update_match(self):
@@ -146,22 +136,18 @@ class Cli:
 
     def delete_match(self):
         print_header('DELETE MATCH:')
-        print('Match ID is required.')
-        choice = check_proceed()
-        if choice == '1':
+        match_id = input('Enter match ID (or type "m" to return to main menu): ')
+        if match_id == 'm' or match_id == 'M':
+            return_to_main_menu(self)
+        else:
             try:
-                match_id = int(input('Enter match ID: '))
-                match = Match.find_by_id(match_id)
+                match_id_int = int(match_id)
+                match = Match.find_by_id(match_id_int)
                 match.delete_match()
                 print('Successfully deleted match!')
             except:
                 show_user_error('Invalid match ID. Please try again.')
                 self.delete_match()
-        elif choice == '2':
-            return_to_main_menu(self)
-        else:
-            show_user_error()
-            self.delete_match()
         self.options()
 
     def view_all_opponents(self):
@@ -187,12 +173,12 @@ class Cli:
                 print_opponent(opponent)
             except:
                 show_user_error('Invalid match ID. Please try again.')
-                self.find_match_by_id()
+                self.find_opponent_by_id()
         elif choice == '2':
             return_to_main_menu(self)
         else:
             show_user_error()
-            self.find_match_by_id()
+            self.find_opponent_by_id()
         self.options()
 
     def add_new_opponent(self):
