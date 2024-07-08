@@ -13,13 +13,10 @@ def show_user_error(e):
     print(f'Error: {e}')
     print('')
 
-def return_to_main_menu(self):
-    clear_screen()
-    self.options()
-
 def check_return_to_main_menu(self, user_input):
     if user_input == 'm' or user_input == 'M':
-        return_to_main_menu(self)
+        clear_screen()
+        self.options()
 
 def calc_match_spacing(obj):
     # custom spacing for record IDs of differing lengths (formatting purposes only)

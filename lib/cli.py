@@ -2,7 +2,6 @@ from helpers import (
     clear_screen,
     print_header,
     show_user_error,
-    return_to_main_menu,
     check_return_to_main_menu,
     print_match,
     print_opponent,
@@ -107,7 +106,8 @@ class Cli:
         outcome = input('Enter outcome (1 = win, 0 = loss): ')
         opponent_id = input('Enter opponent ID: ')
         try:
-            Match.create_match(date=date, outcome=outcome, opponent_id=opponent_id)
+            match = Match.create_match(date=date, outcome=outcome, opponent_id=opponent_id)
+            match.save()
             print('Successfully added new match!')
         except Exception as e:
             show_user_error(e)
@@ -115,7 +115,30 @@ class Cli:
         self.options()
 
     def update_match(self):
-        pass
+        print_header('UPDATE MATCH:')
+        id = input('Enter match id (or type "m" to return to main menu): ')
+        check_return_to_main_menu(self, id)
+
+        try:
+            match = Match.find_by_id(int(id))
+            print('')
+            print('Match to be updated:')
+            print_match(match)
+        except:
+            show_user_error(e='Invalid match ID. Please try again.')
+            self.update_match()
+        
+        try:
+            date = input('Enter new date in MM-DD-YY format: ')
+            outcome = input('Enter new outcome (1 = win, 0 = loss): ')
+            opponent_id = input('Enter new opponent ID: ')
+            updated_match = Match(date=date, outcome=outcome, opponent_id=opponent_id, id=int(id))
+            updated_match.update_match()
+            print('Successfully updated match!')
+        except Exception as e:
+            show_user_error(e)
+            self.update_match()
+        self.options()
 
     def delete_match(self):
         print_header('DELETE MATCH:')
@@ -160,7 +183,8 @@ class Cli:
         name = input('Enter name (or type "m" to return to main menu): ')
         check_return_to_main_menu(self, name)
         try:
-            Opponent.create_opponent(name=name)
+            opponent = Opponent.create_opponent(name=name)
+            opponent.save()
             print('Successfully added new opponent!')
         except Exception as e:
             show_user_error(e)

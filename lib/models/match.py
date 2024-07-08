@@ -111,6 +111,13 @@ class Match:
         sql = "SELECT * FROM matches WHERE id = ?"
         match = CURSOR.execute(sql, (id,)).fetchone()
         return cls.instance_from_db(match)
+    
+    def update_match(self):
+        sql = "UPDATE matches SET date = ?, outcome = ?, opponent_id = ? WHERE id = ?"
+        CURSOR.execute(sql, (self.date, self.outcome, self.opponent_id, self.id))
+        CONN.commit()
+
+        Match.all[self.id] = self
 
     def delete_match(self):
         sql = "DELETE FROM matches WHERE id = ?"
