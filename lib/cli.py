@@ -162,10 +162,10 @@ class Cli:
 
     def find_opponent_by_id(self):
         print_header('FIND OPPONENT BY ID:')
-        print('Opponent ID is required.')
-        choice = check_proceed()
-        if choice == '1':
-            id = input('Enter opponent id: ')
+        id = input('Enter opponent id (or type "m" to return to main menu): ')
+        if id == 'm' or id == 'M':
+            return_to_main_menu(self)
+        else:
             try:
                 opponent = Opponent.find_by_id(int(id))
                 clear_screen()
@@ -174,11 +174,6 @@ class Cli:
             except:
                 show_user_error('Invalid match ID. Please try again.')
                 self.find_opponent_by_id()
-        elif choice == '2':
-            return_to_main_menu(self)
-        else:
-            show_user_error()
-            self.find_opponent_by_id()
         self.options()
 
     def add_new_opponent(self):
