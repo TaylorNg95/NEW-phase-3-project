@@ -178,21 +178,16 @@ class Cli:
 
     def add_new_opponent(self):
         print_header('ADD NEW OPPONENT:')
-        print('Opponent name is required.')
-        choice = check_proceed()
-        if choice == '1':
-            name = input('Enter name: ')
+        name = input('Enter name (or type "m" to return to main menu): ')
+        if name == 'm' or name == 'M':
+            return_to_main_menu(self)
+        else:
             try:
                 Opponent.create_opponent(name=name)
                 print('Successfully added new opponent!')
             except Exception as e:
                 show_user_error(e)
                 self.add_new_opponent()
-        elif choice == '2':
-            return_to_main_menu(self)
-        else:
-            show_user_error()
-            self.add_new_opponent()
         self.options()
 
     def update_opponent(self):
