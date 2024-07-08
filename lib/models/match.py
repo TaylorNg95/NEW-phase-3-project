@@ -1,7 +1,6 @@
 import re
-from __init__ import CONN, CURSOR
+from models.__init__ import CONN, CURSOR
 from datetime import datetime
-import ipdb
 
 class Match:
     all = {}
