@@ -213,12 +213,13 @@ class Cli:
 
     def matches_by_opponent(self):
         print_header('SEARCH MATCHES BY OPPONENT:')
-        print('Opponent ID is required.')
-        choice = check_proceed()
-        if choice == '1':
+        opp_id = input('Enter opponent ID (or type "m" to return to main menu): ')
+        if opp_id == 'm' or opp_id == 'M':
+            return_to_main_menu(self)
+        else:
             try:
-                opponent_id = int(input('Enter opponent ID: '))
-                opponent = Opponent.find_by_id(opponent_id)
+                opp_id_int = int(opp_id)
+                opponent = Opponent.find_by_id(opp_id_int)
                 matches = opponent.get_matches()
                 clear_screen()
                 print(f'MATCHES AGAINST {opponent.name.upper()}:')
@@ -231,19 +232,14 @@ class Cli:
             except:
                 show_user_error('Invalid opponent ID. Please try again.')
                 self.matches_by_opponent()
-        elif choice == '2':
-            return_to_main_menu(self)
-        else:
-            show_user_error()
-            self.matches_by_opponent()
         self.options()
 
     def matches_by_date(self):
         print_header('SEARCH MATCHES BY DATE:')
-        print('Start and end dates are required.')
-        choice = check_proceed()
-        if choice == '1':
-            start = input('Enter start date (MM-DD-YY): ')
+        start = input('Enter start date in MM-DD-YY format (or type "m" to return to main menu): ')
+        if start == 'm' or start == 'M':
+            return_to_main_menu(self)
+        else:
             end = input('Enter end date (MM-DD-YY): ')
             try:
                 matches = Match.search_by_date(start, end)
@@ -258,9 +254,4 @@ class Cli:
             except:
                 show_user_error('Invalid dates. Please try again.')
                 self.matches_by_date()
-        elif choice == '2':
-            return_to_main_menu(self)
-        else:
-            show_user_error()
-            self.matches_by_date()
         self.options()
