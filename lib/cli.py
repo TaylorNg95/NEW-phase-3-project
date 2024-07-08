@@ -192,7 +192,28 @@ class Cli:
         self.options()
 
     def update_opponent(self):
-        pass
+        print_header('UPDATE OPPONENT:')
+        id = input('Enter opponent id (or type "m" to return to main menu): ')
+        check_return_to_main_menu(self, id)
+
+        try:
+            id = int(id)
+            opponent = Opponent.find_by_id(id)
+            if not opponent:
+                raise Exception
+        except:
+            show_user_error('Invalid opponent ID. Please try again.')
+            self.update_opponent()
+        
+        try:
+            name = input('Enter new name: ')
+            updated_opponent = Opponent(name=name, id=id)
+            updated_opponent.update_opponent()
+            print('Successfully updated opponent!')
+        except Exception as e:
+            show_user_error(e)
+            self.update_opponent()
+        self.options()
 
     def delete_opponent(self):
         print_header('DELETE OPPONENT:')
