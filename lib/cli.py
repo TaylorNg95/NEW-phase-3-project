@@ -107,7 +107,6 @@ class Cli:
         opponent_id = input('Enter opponent ID: ')
         try:
             match = Match.create_match(date=date, outcome=outcome, opponent_id=opponent_id)
-            match.save()
             print('Successfully added new match!')
         except Exception as e:
             show_user_error(e)
@@ -184,7 +183,6 @@ class Cli:
         check_return_to_main_menu(self, name)
         try:
             opponent = Opponent.create_opponent(name=name)
-            opponent.save()
             print('Successfully added new opponent!')
         except Exception as e:
             show_user_error(e)
@@ -201,6 +199,9 @@ class Cli:
             opponent = Opponent.find_by_id(id)
             if not opponent:
                 raise Exception
+            print('')
+            print('Opponent to be updated:')
+            print_opponent(opponent)
         except:
             show_user_error('Invalid opponent ID. Please try again.')
             self.update_opponent()
