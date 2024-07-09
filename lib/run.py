@@ -9,8 +9,8 @@ Match.create_table()
 
 # DEVELOPMENT PURPOSES ONLY**
 """ Match.drop_table()
-Opponent.drop_table() """
-
+Opponent.drop_table()
+ """
 """ Opponent.create_opponent(name='Brittany Collens')
 Opponent.create_opponent(name='Katarina Jokic')
 Opponent.create_opponent(name='Lauren Proctor')
