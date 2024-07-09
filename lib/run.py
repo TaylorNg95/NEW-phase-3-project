@@ -9,12 +9,12 @@ Match.create_table()
 
 # DEVELOPMENT PURPOSES ONLY**
 """ Match.drop_table()
-Opponent.drop_table()
- """
-""" Opponent.create_opponent(name='Brittany Collens')
-Opponent.create_opponent(name='Katarina Jokic')
-Opponent.create_opponent(name='Lauren Proctor')
-Opponent.create_opponent(name='Ashley Lahey')
+Opponent.drop_table() """
+
+""" Opponent.create_opponent(name='Opponent 1')
+Opponent.create_opponent(name='Opponent 2')
+Opponent.create_opponent(name='Opponent 3')
+Opponent.create_opponent(name='Opponent 4')
 Match.create_match(date='01-15-24', outcome=1, opponent_id=1)
 Match.create_match(date='03-15-24', outcome=1, opponent_id=1)
 Match.create_match(date='04-10-24', outcome=0, opponent_id=2)
