@@ -85,7 +85,7 @@ class Opponent:
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
 
-        # Need to mimic cascade behavior; if an opponent is deleted, all related match records should also be deleted
+        # Mimic cascade behavior; if an opponent is deleted, all related match records should also be deleted
         sql = "DELETE FROM matches WHERE opponent_id = ?"
         CURSOR.execute(sql, (self.id,))
         CONN.commit()

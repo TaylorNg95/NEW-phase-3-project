@@ -34,7 +34,7 @@ class Match:
             if outcome_int == 1 or outcome_int == 0:
                 self._outcome = outcome_int
             else:
-                raise Exception('Outcome must be 1 or 0')
+                raise Exception
         except:
             raise Exception('Outcome must be 1 or 0')
         

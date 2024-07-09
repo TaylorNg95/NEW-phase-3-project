@@ -106,7 +106,7 @@ class Cli:
         outcome = input('Enter outcome (1 = win, 0 = loss): ')
         opponent_id = input('Enter opponent ID: ')
         try:
-            match = Match.create_match(date=date, outcome=outcome, opponent_id=opponent_id)
+            Match.create_match(date=date, outcome=outcome, opponent_id=opponent_id)
             print('Successfully added new match!')
         except Exception as e:
             show_user_error(e)
@@ -118,6 +118,7 @@ class Cli:
         id = input('Enter match id (or type "m" to return to main menu): ')
         check_return_to_main_menu(self, id)
 
+        # Validate match ID first
         try:
             match = Match.find_by_id(int(id))
             print('')
@@ -127,6 +128,7 @@ class Cli:
             show_user_error(e='Invalid match ID. Please try again.')
             self.update_match()
         
+        # Validate new inputs
         try:
             date = input('Enter new date in MM-DD-YY format: ')
             outcome = input('Enter new outcome (1 = win, 0 = loss): ')
@@ -144,8 +146,7 @@ class Cli:
         match_id = input('Enter match ID (or type "m" to return to main menu): ')
         check_return_to_main_menu(self, match_id)
         try:
-            match_id_int = int(match_id)
-            match = Match.find_by_id(match_id_int)
+            match = Match.find_by_id(int(match_id))
             match.delete_match()
             print('Successfully deleted match!')
         except:
@@ -182,7 +183,7 @@ class Cli:
         name = input('Enter name (or type "m" to return to main menu): ')
         check_return_to_main_menu(self, name)
         try:
-            opponent = Opponent.create_opponent(name=name)
+            Opponent.create_opponent(name=name)
             print('Successfully added new opponent!')
         except Exception as e:
             show_user_error(e)
@@ -194,6 +195,7 @@ class Cli:
         id = input('Enter opponent id (or type "m" to return to main menu): ')
         check_return_to_main_menu(self, id)
 
+        # Validate opponent ID first
         try:
             id = int(id)
             opponent = Opponent.find_by_id(id)
@@ -206,6 +208,7 @@ class Cli:
             show_user_error('Invalid opponent ID. Please try again.')
             self.update_opponent()
         
+        # Validate new name input
         try:
             name = input('Enter new name: ')
             updated_opponent = Opponent(name=name, id=id)
@@ -223,8 +226,7 @@ class Cli:
         opp_id = input('Enter opponent ID (or type "m" to return to main menu): ')
         check_return_to_main_menu(self, opp_id)
         try:
-            opp_id_int = int(opp_id)
-            opponent = Opponent.find_by_id(opp_id_int)
+            opponent = Opponent.find_by_id(int(opp_id))
             opponent.delete_opponent()
             print('Successfully deleted opponent!')
         except:
@@ -237,8 +239,7 @@ class Cli:
         opp_id = input('Enter opponent ID (or type "m" to return to main menu): ')
         check_return_to_main_menu(self, opp_id)
         try:
-            opp_id_int = int(opp_id)
-            opponent = Opponent.find_by_id(opp_id_int)
+            opponent = Opponent.find_by_id(int(opp_id))
             matches = opponent.get_matches()
             clear_screen()
             print(f'MATCHES AGAINST {opponent.name.upper()}:')
